@@ -26,20 +26,18 @@ class MonoidSuite extends FunSuite with Checkers {
   class MonoidLaws[T: Monoid: Arbitrary] extends Properties("Monoid") {
 
     val m = implicitly[Monoid[T]]
+    import m.zero
 
-    /* 0 + a == a */
     property("zero should be a left identity element of plus operation") = forAll { a: T =>
-      m.plus(m.zero, a) == a
+      zero + a == a
     }
 
-    /* a + 0 == a */
     property("zero should be a right identity element of plus operation") = forAll { a: T =>
-      m.plus(a, m.zero) == a
+      a + zero == a
     }
 
-    /* (a + b) + c == a + (b + c) */
     property("plus operation should be associative") = forAll { (a: T, b: T, c: T) =>
-      m.plus(m.plus(a, b), c) == m.plus(a, m.plus(b, c))
+      (a + b) + c == a + (b + c)
     }
 
   }

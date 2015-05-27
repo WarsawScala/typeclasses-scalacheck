@@ -36,4 +36,14 @@ package object typeclasses {
     def zero = 0
   }
 
+  /**
+   * MonoidOps[T] adjoins `+` operation to type T, whenever implicit instance Monoid[T] exists
+   */
+  implicit class MonoidOps[T: Monoid](t: T) {
+
+    val m = implicitly[Monoid[T]]
+
+    def +(s: T): T = m.plus(s, t)
+  }
+
 }
